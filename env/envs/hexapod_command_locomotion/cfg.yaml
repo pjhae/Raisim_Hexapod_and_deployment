@@ -1,0 +1,39 @@
+seed: 1
+record_video: no
+
+environment:
+  render: True
+  num_envs: 50
+  eval_every_n: 100
+  num_threads: 4
+  simulation_dt: 0.0025
+  control_dt: 0.05
+  max_time: 5.0
+  reward:
+    linVelErr:
+      coeff: 4.0
+    yawRateErr:
+      coeff: 1.0 # yawRate is too small
+    torque:
+      coeff: -0.1
+    headingAng:
+      coeff: -0.3
+  command:
+    dt: 5.0
+    xAxisVel:
+      min: 0.3
+      max: 0.3
+    yAxisVel:
+      min: 0.0
+      max: 0.0
+    yawRate:
+      min: 0.0
+      max: 0.0
+  randomization:
+    mass: False
+    initialization: False
+    
+
+architecture:
+  policy_net: [256, 128]
+  value_net: [256, 128]
