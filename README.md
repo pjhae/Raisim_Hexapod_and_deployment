@@ -57,7 +57,7 @@ Installation : RAISIM + (linux)
 
 ## 5. Results - (Real robot deployment)
 
-Video : [[YOUTUBE link](https://www.youtube.com/watch?v=ApI5J0-24kw)]
+**Video : [[YOUTUBE link](https://www.youtube.com/watch?v=ApI5J0-24kw)]**
 
 You can watch video through the link above!
 
