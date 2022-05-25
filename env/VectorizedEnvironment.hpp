@@ -125,10 +125,10 @@ class VectorizedEnvironment {
 
   const std::vector<std::map<std::string, float>>& getRewardInfo() { return rewardInformation_; }
 
-  void setCommand(Eigen::Ref<EigenRowMajorMat> &command) {
+  void setCommand(Eigen::VectorXd &commands) {
 #pragma omp parallel for
     for (int i = 0; i < num_envs_; i++)
-        environments_[i]->setCommand(command.row(i));
+        environments_[i]->setCommand(commands[i]);
   }
 
  private:

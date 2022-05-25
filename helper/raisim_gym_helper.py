@@ -84,21 +84,13 @@ def load_environment_model_param(weight_path, model, optimizer, data_dir, device
 
 class Command:
     def __init__(self, cfg):
-        self._x_vel = cfg['environment']['command']['xAxisVel']
-        self._y_vel = cfg['environment']['command']['yAxisVel']
-        self._yaw_rate = cfg['environment']['command']['yawRate']
         self._n_envs = cfg['environment']['num_envs']
+        self._n_classes = cfg['environment']['command']['num_classes']
 
     def sample_train(self):
-        x_vel = np.random.uniform(low=self._x_vel['min'], high=self._x_vel['max'], size=self._n_envs)
-        y_vel = np.random.uniform(low=self._y_vel['min'], high=self._y_vel['max'], size=self._n_envs)
-        yaw_rate = np.random.uniform(low=self._yaw_rate['min'], high=self._yaw_rate['max'], size=self._n_envs)
-        command = np.stack((x_vel, y_vel, yaw_rate), axis=1)
-        return np.ascontiguousarray(command).astype(np.float32)
+        command = np.random.randint(self._n_classes, size=self._n_envs)
+        return np.ascontiguousarray(command).astype(np.int32)
 
     def sample_evaluate(self):
-        x_vel = np.random.uniform(low=self._x_vel['min'], high=self._x_vel['max'], size=1)
-        y_vel = np.random.uniform(low=self._y_vel['min'], high=self._y_vel['max'], size=1)
-        yaw_rate = np.random.uniform(low=self._yaw_rate['min'], high=self._yaw_rate['max'], size=1)
-        command = np.stack((x_vel, y_vel, yaw_rate), axis=1)
-        return np.ascontiguousarray(np.broadcast_to(command, (self._n_envs, 3))).astype(np.float32)
+        command = np.random.randint(self._n_classes, size=1)
+        return np.ascontiguousarray(np.broadcast_to(command, self._n_envs)).astype(np.int32)

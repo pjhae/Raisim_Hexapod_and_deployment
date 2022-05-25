@@ -42,6 +42,7 @@ reward_names.append('reward_sum')
 # for custom command
 command = Command(cfg)
 n_steps_command = cfg['environment']['command']['dt'] / cfg['environment']['control_dt']
+command_dict = {0:'Go Forward', 1:'Turn Left', 2:'Turn Right', 3:'Go Backward', 4:'Go Left', 5:'Go Right'} # should be updated manually when changed!!
 
 # create environment from the configuration file
 env = VecEnv(hexapod_command_locomotion.RaisimGymEnv(home_path + "/rsc", dump(cfg['environment'], Dumper=RoundTripDumper)), cfg['environment'])
@@ -56,10 +57,10 @@ total_steps = n_steps * env.num_envs
 
 avg_rewards = []
 
-actor = ppo_module.Actor(ppo_module.MLP(cfg['architecture']['policy_net'], nn.LeakyReLU, ob_dim, act_dim),
+actor = ppo_module.Actor(ppo_module.MLP(cfg['architecture']['policy_net'], ob_dim, act_dim),
                          ppo_module.MultivariateGaussianDiagonalCovariance(act_dim, 1.0),
                          device)
-critic = ppo_module.Critic(ppo_module.MLP(cfg['architecture']['value_net'], nn.LeakyReLU, ob_dim, 1),
+critic = ppo_module.Critic(ppo_module.MLP(cfg['architecture']['value_net'], ob_dim, 1),
                            device)
 
 saver = ConfigurationSaver(log_dir=home_path + "/raisimGymTorch/data/"+task_name,
@@ -70,12 +71,13 @@ ppo = PPO.PPO(actor=actor,
               critic=critic,
               num_envs=cfg['environment']['num_envs'],
               num_transitions_per_env=n_steps,
-              num_learning_epochs=4,
-              learning_rate=1e-4,
+              num_learning_epochs=16, # or, just 4
+              learning_rate=3e-5, # can be smaller
               num_mini_batches=4,
               device=device,
               log_dir=saver.data_dir,
               shuffle_batch=False,
+              # can adjust gamma, lambda values too
               )
 
 if mode == 'retrain':
@@ -89,6 +91,7 @@ for name in reward_names:
 # for info logger
 recent_dones = 0.
 recent_elapsed = 0.
+
 
 for update in range(1000000):
     start = time.time()
@@ -106,13 +109,13 @@ for update in range(1000000):
             'optimizer_state_dict': ppo.optimizer.state_dict(),
         }, saver.data_dir+"/full_"+str(update)+'.pt')
         # we create another graph just to demonstrate the save/load method
-        loaded_graph = ppo_module.MLP(cfg['architecture']['policy_net'], nn.LeakyReLU, ob_dim, act_dim)
+        loaded_graph = ppo_module.MLP(cfg['architecture']['policy_net'], ob_dim, act_dim)
         loaded_graph.load_state_dict(torch.load(saver.data_dir+"/full_"+str(update)+'.pt')['actor_architecture_state_dict'])
 
         env.turn_on_visualization()
         # env.start_video_recording(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + "policy_"+str(update)+'.mp4')
 
-        for step in range(n_steps*2):
+        for step in range(n_steps):
             with torch.no_grad():
                 frame_start = time.time()
 
@@ -120,13 +123,10 @@ for update in range(1000000):
                 if step % n_steps_command == 0:
                     sample_command = command.sample_evaluate()
                     env.setCommand(sample_command)
-                    print(f"xAxisVel : {sample_command[0][0]:5.2f}",
-                          f"\tyAxisVel : {sample_command[0][1]:5.2f}",
-                          f"\tyawRate : {sample_command[0][2]:5.2f}"
-                          )
+                    print(command_dict[sample_command[0]])
 
                 obs = env.observe(False)
-                action_ll = loaded_graph.architecture(torch.from_numpy(obs).cpu())
+                action_ll = loaded_graph(torch.from_numpy(obs).cpu())
                 reward_ll, dones = env.step(action_ll.cpu().detach().numpy())
                 frame_end = time.time()
                 wait_time = cfg['environment']['control_dt'] - (frame_end-frame_start)

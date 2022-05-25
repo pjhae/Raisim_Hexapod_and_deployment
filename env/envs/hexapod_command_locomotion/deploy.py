@@ -11,6 +11,19 @@ import torch
 
 NUM_DXL = 18
 
+# ----------------------- command initialization ----------------------- #
+
+low_bound = np.array([-1.0, -1.0, 0.0]*6)
+high_bound = np.array([1.0, 0.0, 1.0]*6)
+
+_n_classes = 3
+_one_hot_command = np.zeros(_n_classes, dtype=np.float32)
+
+command_str = {0:'GO FORWARD', 1:'TURN LEFT', 2:'TURN RIGHT'}
+
+command_period = 5.0 # in sec
+n_steps_for_command = int(command_period / 0.05 + 1e-8)
+
 # ----------------------- model initialization ----------------------- #
 
 parser = argparse.ArgumentParser()
@@ -22,7 +35,7 @@ args = parser.parse_args()
 task_path = os.path.dirname(os.path.realpath(__file__))
 
 # shortcuts
-ob_dim = NUM_DXL*6
+ob_dim = NUM_DXL*3 + _n_classes
 act_dim = NUM_DXL
 
 weight_path = args.weight
@@ -34,8 +47,8 @@ print("Loaded weight from {}\n".format(weight_path))
 cfg = YAML().load(open(weight_dir+"cfg.yaml", 'r'))
 
 print("Evaluating the policy: ", weight_path)
-loaded_graph = ppo_module.MLP(cfg['architecture']['policy_net'], torch.nn.LeakyReLU, ob_dim, act_dim)
-loaded_graph.load_state_dict(torch.load(weight_path)['actor_architecture_state_dict'])
+loaded_graph = ppo_module.MLP(cfg['architecture']['policy_net'], ob_dim, act_dim)
+loaded_graph.load_state_dict(torch.load(weight_path, map_location = torch.device ('cpu'))['actor_architecture_state_dict'])
 
 mean_file_name = weight_dir + "mean" + str(iteration_number) + ".csv"
 var_file_name = weight_dir + "var" + str(iteration_number) + ".csv"
@@ -46,8 +59,7 @@ obs_var = np.loadtxt(var_file_name, dtype=np.float32)
 
 buffer_size = 3
 offset1 = np.zeros(NUM_DXL)
-_jnt_buffer = np.array([offset1]*3, dtype=np.float32)
-_act_buffer = np.array([offset1]*3, dtype=np.float32)
+_jnt_buffer = np.array([offset1]*buffer_size, dtype=np.float32)
 
 # ----------------------- servo initialization ----------------------- #
 
@@ -110,6 +122,9 @@ for i in range(NUM_DXL):
     else:
         print("enabled DXL#%02d" % DXL_ID[i])
 
+
+# ---------------------------------------------- #
+
 # declare variables
 
 dxl_goal_pos = [1] * NUM_DXL
@@ -117,7 +132,7 @@ joint_values = [1.0] * NUM_DXL
 dxl_present_pos = [1] * NUM_DXL
 param_goal_pos = [[]] * NUM_DXL
 
-# reset servos center
+# reset 
 
 for i in range(NUM_DXL):
     param_goal_pos[i] = [
@@ -133,34 +148,66 @@ for i in range(NUM_DXL):
         quit()
 
 dxl_comm_result = groupSyncWrite.txPacket()
+
 if dxl_comm_result != COMM_SUCCESS:
     print(packetHandler.getTxRxResult(dxl_comm_result))
 
-input("Type any key and enter to start loop.")
-
 # ----------------------- running PPO model ----------------------- #
 
-while True:
+for step in range(100000000):
     last_time = time.time()
+    
+    # give command
+    
+    if step % n_steps_for_command == 0:
+    
+        # ----- reset ----- #
+        for i in range(NUM_DXL):
+            param_goal_pos[i] = [
+                DXL_LOBYTE(512+offset[i]),
+                DXL_HIBYTE(512+offset[i])
+            ]
+            dxl_addparam_result = groupSyncWrite.changeParam(
+                dxl_id=DXL_ID[i],
+                data=param_goal_pos[i]
+            )
+            if not dxl_addparam_result:
+                print("DXL#%02d groupSyncWrite addparam failed" % DXL_ID[i])
+                quit()
+
+        dxl_comm_result = groupSyncWrite.txPacket()
+
+        if dxl_comm_result != COMM_SUCCESS:
+            print(packetHandler.getTxRxResult(dxl_comm_result))
+        # ----- reset end ----- #
+            
+        _jnt_buffer = np.array([offset1]*buffer_size, dtype=np.float32)
+        command = int(input("Type command enter to start loop.\n"))
+        print(command_str[command])
+            
+        _one_hot_command = np.zeros(_n_classes, dtype=np.float32)
+        _one_hot_command[command] = 1.0
 
     # get action from observation by model ( < 6 ms )
 
     observation = np.concatenate([
         _jnt_buffer.ravel(),
-        _act_buffer.ravel()
+        _one_hot_command
     ])
     
-    # consider scaling ( ??? )
+    # consider scaling
     
     observation = np.clip((observation - obs_mean) / np.sqrt(obs_var + 1e-8), -10.0, 10.0)
-    action = 0.3*loaded_graph.architecture(torch.from_numpy(observation).cpu())
+    action = 0.3*loaded_graph.architecture(torch.from_numpy(observation).cpu())[0]
 
     # convert radian into integer ( < 4 ms )
+    
+    action = np.clip(action.detach().numpy(), low_bound, high_bound) # clip action as raisim env
 
-    dxl_goal_pos[0:7:3] = list(map(lambda x: np.clip(int(np.round(-x*195.37861+512)), 316, 708), action[0:7:3].detach().numpy()))
-    dxl_goal_pos[1:8:3] = list(map(lambda x: np.clip(int(np.round(x*195.37861+512)), 316, 708), action[1:8:3].detach().numpy()))
-    dxl_goal_pos[2:9:3] = list(map(lambda x: np.clip(int(np.round(x*195.37861+512)), 316, 708), action[2:9:3].detach().numpy()))
-    dxl_goal_pos[9:18] = list(map(lambda x: np.clip(int(np.round(-x*195.37861+512)), 316, 708), action[9:18].detach().numpy()))
+    dxl_goal_pos[0:7:3] = list(map(lambda x: int(np.round(-x*195.37861+512)), action[0:7:3]))
+    dxl_goal_pos[1:8:3] = list(map(lambda x: int(np.round(x*195.37861+512)), action[1:8:3]))
+    dxl_goal_pos[2:9:3] = list(map(lambda x: int(np.round(x*195.37861+512)), action[2:9:3]))
+    dxl_goal_pos[9:18] = list(map(lambda x: int(np.round(-x*195.37861+512)), action[9:18]))
     
     # write action on servos ( < 1 ms )
 
@@ -200,17 +247,12 @@ while True:
     joint_values[1:8:3] = list(map(lambda y: (y-512)*5.1182676e-3, dxl_present_pos[1:8:3]))
     joint_values[2:9:3] = list(map(lambda y: (y-512)*5.1182676e-3, dxl_present_pos[2:9:3]))
     joint_values[9:18] = list(map(lambda y: (512-y)*5.1182676e-3, dxl_present_pos[9:18]))
-    
-    # print(joint_values)
 
     # update buffer ( < 0.1 ms )
 
-    _jnt_buffer[1] = _jnt_buffer[0]
-    _jnt_buffer[2] = _jnt_buffer[1]
-    _jnt_buffer[0] = joint_values  # get recent joint values
-    _act_buffer[1] = _act_buffer[0]
-    _act_buffer[2] = _act_buffer[1]
-    _act_buffer[0] = action.detach().numpy()  # get recent action
+    _jnt_buffer[0] = _jnt_buffer[1]
+    _jnt_buffer[1] = _jnt_buffer[2]
+    _jnt_buffer[2] = joint_values  # get recent joint values
 
     # wait for dt_action ( dt for action : 50 ms )
 

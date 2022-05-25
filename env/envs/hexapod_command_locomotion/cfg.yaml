@@ -3,35 +3,26 @@ record_video: no
 
 environment:
   render: True
-  num_envs: 50
+  num_envs: 64
   eval_every_n: 100
   num_threads: 4
-  simulation_dt: 0.0025
+  simulation_dt: 0.0025 # originally 0.0025, but for shorter training time you can set this 0.005, but resolution reduced..
   control_dt: 0.05
-  max_time: 5.0
+  max_time: 15.0 # max_time / command.dt = num of command in episode
   reward:
-    linVelErr:
-      coeff: 4.0
-    yawRateErr:
-      coeff: 1.0 # yawRate is too small
+    linearVel:
+      coeff: 1.0
+    angularVel:
+      coeff: 0.4
+    #lateralVel:
+      #coeff: 3.0
     torque:
-      coeff: -0.1
-    headingAng:
-      coeff: -0.3
+      coeff: -2e-2  # change this 0.0 when retrain the model
   command:
-    dt: 5.0
-    xAxisVel:
-      min: 0.3
-      max: 0.3
-    yAxisVel:
-      min: 0.0
-      max: 0.0
-    yawRate:
-      min: 0.0
-      max: 0.0
+    dt: 5
+    num_classes: 3
   randomization:
     mass: False
-    initialization: False
     
 
 architecture:
