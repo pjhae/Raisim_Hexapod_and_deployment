@@ -16,12 +16,12 @@ Installation : RAISIM + (linux)
 
 **Robot Hardware** : *PhantomX-MK3* [[INFO](https://www.trossenrobotics.com/Quadruped-Robot-Hexapod-Robot-Kits.aspx)]
 
-**Communication** : *Dynamixel SDK(#18 of AX-12A) & PC* by **U2D2 [[INFO](https://www.robotis.com/shop/item.php?it_id=902-0132-000)]*
+**Communication** : *Dynamixel SDK(#18 of AX-12A) & PC* by **U2D2** [[INFO](https://www.robotis.com/shop/item.php?it_id=902-0132-000)]
 
 
 ![image](https://user-images.githubusercontent.com/74540268/170243754-6a16f510-fda8-4b47-a6e6-099610fb7e5e.png)
 
-*Solidworks to URDF* : All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]*
+*Solidworks to URDF* : All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]
 
 
 ## 1. Motor parameter tuning Algorithm
