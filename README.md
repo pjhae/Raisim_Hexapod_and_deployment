@@ -7,8 +7,8 @@
 
 Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + (linux)
 
-1. Move to
 
+1. Move to
 
   YOUR_PATH/raisimLib/raisimGymTorch/raisimGymTorch/
 
