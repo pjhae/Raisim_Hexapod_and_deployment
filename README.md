@@ -5,7 +5,7 @@
 
 ## Requirments
 
-Installation : RAISIM + (linux)
+Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + (linux)
 
 1.
 
