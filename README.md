@@ -7,11 +7,13 @@
 
 Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + (linux)
 
-1.
+1. Move to
+  YOUR_PATH/raisimLib/raisimGymTorch/raisimGymTorch/
 
-2.
+2. Clone the repository in
+  YOUR_PATH/raisimLib/raisimGymTorch/raisimGymTorch/
 
-3.
+3. 
 
 4.
 
