@@ -10,31 +10,31 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 
 **1. Move to**
 
-  YOUR_PATH/raisimLib/raisimGymTorch/raisimGymTorch/
+    YOUR_PATH/raisimLib/raisimGymTorch/raisimGymTorch/
 
 **2. Clone the repository in**
 
-  YOUR_PATH/raisimLib/raisimGymTorch/raisimGymTorch/
+    YOUR_PATH/raisimLib/raisimGymTorch/raisimGymTorch/
 
 **3. Move [hexapod] directory to**
 
-  YOUR_PATH/raisimLib/rsc/
+    YOUR_PATH/raisimLib/rsc/
 
 **4. set up environment**
 
-  cd YOUR_PATH/raisimLib/raisimGymTorch/
-  python setup.py develop
+    cd YOUR_PATH/raisimLib/raisimGymTorch/
+    python setup.py develop
   
 **5. Train/Test**
 
-  cd YOUR_PATH/raisimLib/raisimGymTorch/env/envs/hexapod_command_locomotion
-  python runner.py
-  python tester.py -w [model_PATH]
+    cd YOUR_PATH/raisimLib/raisimGymTorch/env/envs/hexapod_command_locomotion
+    (Training) python runner.py
+    (Test) python tester.py -w [model_PATH]
 
 **6. (optional) Deployment**
 
-  cd YOUR_PATH/raisimLib/raisimGymTorch/env/envs/hexapod_command_locomotion
-  python deploy.py -w [model_PATH]
+    cd YOUR_PATH/raisimLib/raisimGymTorch/env/envs/hexapod_command_locomotion
+    python deploy.py -w [model_PATH]
 
 
 
