@@ -7,7 +7,15 @@
 
 Installation : RAISIM + (linux)
 
+1.
 
+2.
+
+3.
+
+4.
+
+5.
 
 
 
@@ -22,6 +30,8 @@ Installation : RAISIM + (linux)
 ![image](https://user-images.githubusercontent.com/74540268/170243754-6a16f510-fda8-4b47-a6e6-099610fb7e5e.png)
 
 *Solidworks to URDF* : All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]
+
+
 
 
 ## 1. Motor parameter tuning Algorithm
