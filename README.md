@@ -69,6 +69,6 @@ Installation : RAISIM + (linux)
 
 **Video : [[YOUTUBE link](https://www.youtube.com/watch?v=ApI5J0-24kw)]**
 
-You can watch video through the link above!
+You can watch **video** through the link above!
 
 
