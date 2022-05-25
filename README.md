@@ -2,7 +2,7 @@
 ## 2021 SNU URP project winner
 ### · Implementation of walking of a Hexapod robot using RL
 ### · Sim-to-real gap minimization through simulation parameter tuning.
-
+## 
 ## Requirments
 
 Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + (linux)
