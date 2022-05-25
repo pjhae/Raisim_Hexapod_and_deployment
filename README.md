@@ -12,16 +12,21 @@ Installation : RAISIM + (linux)
 
 ## 0. Setup
 
-Robot Hardware :
-Communication : 
+**Robot Hardware** : PhantomX-MK3 [[INFO](https://www.trossenrobotics.com/Quadruped-Robot-Hexapod-Robot-Kits.aspx)]
+
+**Communication** : Dynamixel SDK(#18 AX-12A) & PC by *U2D2 [[INFO](https://www.robotis.com/shop/item.php?it_id=902-0132-000)]*
+
 
 ![image](https://user-images.githubusercontent.com/74540268/170243754-6a16f510-fda8-4b47-a6e6-099610fb7e5e.png)
 
+*URDF: All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]*
+
+
 ## 1. Motor parameter tuning Algorithm
 
-*ASSUMTION 1 :
+*ASSUMTION 1* : The main cause of the simtoreal problem is the **inaccuracy of motor modeling** and **the latency of the timestep.** [[Related Paper](https://arxiv.org/abs/2102.02915)]
 
-*ASSUMTION 2 :
+*ASSUMTION 2* : 
 
 ![image](https://user-images.githubusercontent.com/74540268/170244886-0cfbc468-01b6-4249-bf97-935bc9a298a0.png)
 
@@ -29,6 +34,14 @@ Communication :
 
 ## 2. Training
 
+RL algorithm : PPO
+
+State : Joint position(18) + Action history(18*3) + Command(3)
+
+Action : Joint position(18)
+* Joint position is continuous (−150 ≤ 𝜃 ≤ 150) degree
+
+Command : One hot vector (100 : go-straight , 010 : turn left , 001 : turn right)
 
 
 
