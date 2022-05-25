@@ -3,7 +3,7 @@
 ### · Implementation of walking of a Hexapod robot using RL
 ### · Sim-to-real gap minimization through simulation parameter tuning.
 ## 
-## Requirments
+## Requirements
 
 Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + (linux)
 
