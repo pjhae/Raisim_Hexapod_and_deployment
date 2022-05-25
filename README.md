@@ -45,7 +45,7 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 **Communication** : *Dynamixel SDK(#18 of AX-12A) & PC* by **U2D2** [[INFO](https://www.robotis.com/shop/item.php?it_id=902-0132-000)]
 
 
-![image](https://user-images.githubusercontent.com/74540268/170243754-6a16f510-fda8-4b47-a6e6-099610fb7e5e.png)
+![image](https://user-images.githubusercontent.com/74540268/170291745-907baf96-afc2-4f65-90c8-36f6c518c713.png)
 
 *Solidworks to URDF* : All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]
 
