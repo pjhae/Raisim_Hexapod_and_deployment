@@ -21,7 +21,7 @@ Installation : RAISIM + (linux)
 
 ![image](https://user-images.githubusercontent.com/74540268/170243754-6a16f510-fda8-4b47-a6e6-099610fb7e5e.png)
 
-*URDF: All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]*
+*Solidworks to URDF* : All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]*
 
 
 ## 1. Motor parameter tuning Algorithm
@@ -32,14 +32,14 @@ Installation : RAISIM + (linux)
 
 ![image](https://user-images.githubusercontent.com/74540268/170244886-0cfbc468-01b6-4249-bf97-935bc9a298a0.png)
 
-**Setting** : With the main body of the robot is fixed, the same action sequence is applied to the simulation and the actual robot.
+**Setting** : With the **main body** of the robot is **fixed**, the **same action sequence** is applied to the simulation and the actual robot.
 
 
 ## 2. Training
 
 **RL algorithm** : PPO
 
-**State** : Joint position(18) + Action history(18*3) + Command(3)
+**State** : Current Joint position(18) + Action history(18*3) + Command(3)
 
 **Action** : Joint position(18)
 * Joint position is continuous (−150 ≤ 𝜃 ≤ 150) degree
