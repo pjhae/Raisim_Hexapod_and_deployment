@@ -10,6 +10,8 @@ Installation : RAISIM + (linux)
 
 
 
+
+
 ## 0. Setup
 
 **Robot Hardware** : PhantomX-MK3 [[INFO](https://www.trossenrobotics.com/Quadruped-Robot-Hexapod-Robot-Kits.aspx)]
@@ -24,26 +26,25 @@ Installation : RAISIM + (linux)
 
 ## 1. Motor parameter tuning Algorithm
 
-*ASSUMTION 1* : The main cause of the simtoreal problem is the **inaccuracy of motor modeling** and **the latency of the timestep.** [[Related Paper](https://arxiv.org/abs/2102.02915)]
+*ASSUMTION 1* : The main cause of the Sim-to-Real gap is the **inaccuracy of motor modeling** and **the latency of the timestep.** [[Related Paper](https://arxiv.org/abs/2102.02915)]
 
-*ASSUMTION 2* : 
+*ASSUMTION 2* : By **matching the time step** of the simulation and the actual robot **equally** at 0.05 seconds, it can be assumed that the Sim-to-Real gap is caused **only by the inaccuracy of motor modeling.**
 
 ![image](https://user-images.githubusercontent.com/74540268/170244886-0cfbc468-01b6-4249-bf97-935bc9a298a0.png)
 
-**Setting** : 
+**Setting** : With the main body of the robot is fixed, the same action sequence is applied to the simulation and the actual robot.
+
 
 ## 2. Training
 
-RL algorithm : PPO
+**RL algorithm** : PPO
 
-State : Joint position(18) + Action history(18*3) + Command(3)
+**State** : Joint position(18) + Action history(18*3) + Command(3)
 
-Action : Joint position(18)
+**Action** : Joint position(18)
 * Joint position is continuous (−150 ≤ 𝜃 ≤ 150) degree
 
-Command : One hot vector (100 : go-straight , 010 : turn left , 001 : turn right)
-
-
+**Command** : One hot vector (100 : go-straight , 010 : turn left , 001 : turn right)
 
 
 ## 3. Results - (Motor parameter tuning)
@@ -55,8 +56,10 @@ Command : One hot vector (100 : go-straight , 010 : turn left , 001 : turn right
 ![rotate](https://user-images.githubusercontent.com/74540268/170244381-a976e5b8-544c-467a-804a-087c82f52eb6.gif) ![walking](https://user-images.githubusercontent.com/74540268/170244255-4d7dc8e4-c94e-49ee-8e1e-5bdd66be27f4.gif)
 
 
-## 4. Results - (Real robot deployment)
+## 5. Results - (Real robot deployment)
 
 Video : [YOUTUBE link](https://www.youtube.com/watch?v=ApI5J0-24kw)
 
 You can watch video through the link above!
+
+
