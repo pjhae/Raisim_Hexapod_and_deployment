@@ -18,7 +18,9 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 
 3. 
 
-4.
+
+
+4. set up environment
 
 5.
 
