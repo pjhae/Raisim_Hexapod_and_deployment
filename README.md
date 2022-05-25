@@ -1,7 +1,7 @@
 # Raisim_Hexapod
 ## 2021 SNU URP project winner
 ### · Implementation of walking of a Hexapod robot using RL
-### · Sim-to-real gap minimization through simulation tuning.
+### · Sim-to-real gap minimization through simulation parameter tuning.
 
 ## Requirments
 
@@ -16,7 +16,7 @@ Installation : RAISIM + (linux)
 
 **Robot Hardware** : PhantomX-MK3 [[INFO](https://www.trossenrobotics.com/Quadruped-Robot-Hexapod-Robot-Kits.aspx)]
 
-**Communication** : Dynamixel SDK(#18 AX-12A) & PC by *U2D2 [[INFO](https://www.robotis.com/shop/item.php?it_id=902-0132-000)]*
+**Communication** : Dynamixel SDK(#18 of AX-12A) & PC by *U2D2 [[INFO](https://www.robotis.com/shop/item.php?it_id=902-0132-000)]*
 
 
 ![image](https://user-images.githubusercontent.com/74540268/170243754-6a16f510-fda8-4b47-a6e6-099610fb7e5e.png)
@@ -41,11 +41,10 @@ Installation : RAISIM + (linux)
 
 **State** : Current Joint position(18) + Action history(18*3) + Command(3)
 
-**Action** : Joint position(18)
-* Joint position is continuous (−150 ≤ 𝜃 ≤ 150) degree
-
 **Command** : One hot vector (100 : go-straight , 010 : turn left , 001 : turn right)
 
+**Action** : Joint position(18)
+* Joint position is continuous (−150 ≤ 𝜃 ≤ 150) degree
 
 ## 3. Results - (Motor parameter tuning)
 ![image](https://user-images.githubusercontent.com/74540268/170244806-2c1a8094-6b53-4e61-9eea-16f15b84b2a5.png)
