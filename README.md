@@ -23,7 +23,7 @@ Communication :
 
 *ASSUMTION 2 :
 
-![image](https://user-images.githubusercontent.com/74540268/170243925-7e3f4813-081c-458e-b040-e51ee513b809.png)
+![image](https://user-images.githubusercontent.com/74540268/170244886-0cfbc468-01b6-4249-bf97-935bc9a298a0.png)
 
 **Setting** : 
 
@@ -34,7 +34,8 @@ Communication :
 
 
 ## 3. Results - (Motor parameter tuning)
-![image](https://user-images.githubusercontent.com/74540268/170244505-ae7c7555-6759-4a43-880a-4596887a81f4.png)
+![image](https://user-images.githubusercontent.com/74540268/170244806-2c1a8094-6b53-4e61-9eea-16f15b84b2a5.png)
+
 
 
 ## 4. Results - (Simulation)
