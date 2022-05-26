@@ -72,7 +72,7 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 **Command** : One hot vector (100 : go-straight , 010 : turn left , 001 : turn right)
 
 **Action** : Joint position(18)
-* Joint position is continuous (−150 ≤ 𝜃 ≤ 150) degree
+* Joint position is continuous (−150 ≤ 𝜃 ≤ 150) degree considering AX-12A motor spec sheet [[INFO](https://emanual.robotis.com/docs/kr/dxl/ax/ax-12a/)]
 ## 
 ## 3. Results - (Motor parameter tuning)
 ![image](https://user-images.githubusercontent.com/74540268/170244806-2c1a8094-6b53-4e61-9eea-16f15b84b2a5.png)
