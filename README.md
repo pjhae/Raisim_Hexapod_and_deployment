@@ -20,7 +20,7 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 
     YOUR_PATH/raisimLib/rsc/
 
-  4. set up environment
+  4. Set up environment
 
     cd YOUR_PATH/raisimLib/raisimGymTorch/
     python setup.py develop
