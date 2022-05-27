@@ -37,6 +37,7 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
     python deploy.py -w [model_PATH]
 
 
+
 ## 
 ## 0. Setup
 
@@ -48,6 +49,7 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 ![image](https://user-images.githubusercontent.com/74540268/170291745-907baf96-afc2-4f65-90c8-36f6c518c713.png)
 
 *Solidworks to URDF* : All links and joints are manually reverse engineered using assembly file from GRABCAD [[link](https://grabcad.com/library)]
+
 
 
 
@@ -88,5 +90,6 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 **Video : [YOUTUBE link](https://www.youtube.com/watch?v=ApI5J0-24kw)**
 
 You can watch **video** through the link above!
+
 
 
