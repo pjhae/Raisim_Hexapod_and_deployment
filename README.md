@@ -64,6 +64,9 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 
 **Setting** : With the **main body** of the robot is **fixed**, the **same action sequence** is applied to the simulation and the actual robot.
 
+
+
+
 ## 
 ## 2. Training
 
@@ -80,9 +83,14 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 ![image](https://user-images.githubusercontent.com/74540268/170244806-2c1a8094-6b53-4e61-9eea-16f15b84b2a5.png)
 
 
+
+
 ## 
 ## 4. Results - (Simulation)
 ![rotate](https://user-images.githubusercontent.com/74540268/170244381-a976e5b8-544c-467a-804a-087c82f52eb6.gif) ![walking](https://user-images.githubusercontent.com/74540268/170244255-4d7dc8e4-c94e-49ee-8e1e-5bdd66be27f4.gif)
+
+
+
 
 ## 
 ## 5. Results - (Real robot deployment)
