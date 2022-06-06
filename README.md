@@ -70,6 +70,9 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 ## 
 ## 2. Training
 
+![image](https://user-images.githubusercontent.com/74540268/172199400-a3232948-f261-442b-bb4c-3c92fc0d420d.png)
+
+
 **RL algorithm** : PPO
 
 **State** : Current Joint position(18) + Action history(18*3) + Command(3)
