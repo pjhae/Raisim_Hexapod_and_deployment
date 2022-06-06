@@ -70,7 +70,7 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 ## 
 ## 2. Training
 
-![image](https://user-images.githubusercontent.com/74540268/172199507-f60048c6-0b92-422f-9c85-3b8596943a5f.png)
+![image](https://user-images.githubusercontent.com/74540268/172199693-ee675f32-4bcb-460b-823a-22eb620c4e28.png)
 
 
 **RL algorithm** : PPO
