@@ -98,7 +98,7 @@ Installation : RAISIM [[link](https://raisim.com/sections/Installation.html)] + 
 ## 
 ## 5. Results - (Real robot deployment)
 
-**Video : [YOUTUBE link](https://www.youtube.com/watch?v=ApI5J0-24kw)**
+**Video : YOUTUBE link**
 
 You can watch **video** through the link above!
 
